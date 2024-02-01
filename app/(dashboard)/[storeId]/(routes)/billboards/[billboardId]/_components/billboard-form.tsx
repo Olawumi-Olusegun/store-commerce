@@ -19,7 +19,7 @@ import toast from 'react-hot-toast';
 import * as z from "zod";
 
 
-interface SettingsFormProps {
+interface BillboardFormProps {
     initialData: Store;
 }
 
@@ -27,18 +27,18 @@ const formSchema = z.object({
     name: z.string().min(1),
 });
 
-type SettingsFormValues = z.infer<typeof formSchema>;
+type BillboardFormValues = z.infer<typeof formSchema>;
 
 
 
-export default function SettingsForm({initialData}: SettingsFormProps) {
+export default function BillboardForm({initialData}: BillboardFormProps) {
 
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const origin = useOrigin();
 
-    const form = useForm<SettingsFormValues>({
+    const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData,
     });
@@ -46,7 +46,7 @@ export default function SettingsForm({initialData}: SettingsFormProps) {
     const params = useParams();
     const router = useRouter();
 
-    const onSubmit = async (formValues: SettingsFormValues) => {
+    const onSubmit = async (formValues: BillboardFormValues) => {
         try {
             setIsLoading(true)
              await axios.patch(`/api/stores/${params.storeId}`, formValues)
