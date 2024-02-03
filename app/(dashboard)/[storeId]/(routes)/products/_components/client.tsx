@@ -24,7 +24,7 @@ export default function ProductClient({data}: Props) {
     <>
     <div>
         <Heading 
-        title={`Billboard (${data?.length})` }
+        title={`Product (${data?.length})` }
         description='Manage products for your store'
         />
         <Button className='mt-2' onClick={() => router.push(`/${params.storeId}/products/new`)}>
@@ -33,7 +33,7 @@ export default function ProductClient({data}: Props) {
         </Button>
     </div>
     <Separator />
-      <DataTable searchKey='label' columns={columns} data={data} />
+      <DataTable searchKey='name' columns={columns} data={data} />
       <Heading title='API' description='API calls for products' />
     <Separator />
     <ApiList entityIdName='productId' entityName='products' />

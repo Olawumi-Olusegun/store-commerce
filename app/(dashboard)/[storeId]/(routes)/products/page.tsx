@@ -32,7 +32,8 @@ export default async function ProductsPage({params: { storeId }}: Props) {
     isFeatured: product.isFeatured,
     isArchived: product.isArchived,
     price: currencyFormatter(product.price.toNumber()),
-    size: product.size,
+    category: product.category.name,
+    size: product.size.name,
     color: product.color.value,
     createdAt: format(product.createdAt, "MMMM do, yyyy"),
   }));

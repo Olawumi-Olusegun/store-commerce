@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import {  ProductColumn } from './columns'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Copy, MoreHorizontal, Trash } from 'lucide-react'
+import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios'
@@ -24,14 +24,13 @@ export default function CellAction({data}: CellActionProps) {
         toast.success("API route copied to the clipboard");
     }
 
-    const onDeleteBillboard = async () => {
+    const onDeleteProduct = async () => {
         try {
             setIsLoading(true)
             const response = await axios.delete(`/api/${params.storeId}/products/${data.id}`)
             router.refresh();
             router.push(`/${params.storeId}/products`);
             toast.success("Billboard deleted");
-            // window.location.assign(`/${params.storeId}/products`);
         } catch (error) {
             toast.error("Make sure you remove all categories using this products first");
         } finally {
@@ -46,7 +45,7 @@ export default function CellAction({data}: CellActionProps) {
      isLoading={isLoading}
      isOpen={open}
      onClose={() => setOpen(false)}
-     onConfirm={onDeleteBillboard}
+     onConfirm={onDeleteProduct}
 
     />
         <DropdownMenu>
@@ -65,7 +64,7 @@ export default function CellAction({data}: CellActionProps) {
                     <span>Copy Id</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/products/${data.id}`)} className='cursor-pointer'>
-                    <Copy className='w-4 h-4 mr-2' />
+                    <Edit className='w-4 h-4 mr-2' />
                     <span>Update</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setOpen(true)} className='cursor-pointer'>

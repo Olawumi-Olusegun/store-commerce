@@ -12,14 +12,14 @@ export default async function CategoryPageWithId({params: {categoryId, storeId}}
         where: { id: categoryId }
     });
 
-    const billboards = await prismadb.billboard.findMany({
+    const categories = await prismadb.category.findMany({
         where: { storeId }
     });
 
   return (
     <div className='flex flex-col'>
         <div className="flex-1 space-y-4 p-8">
-            <CategoryForm initialData={category} billboards={billboards} />
+            <CategoryForm initialData={category} categories={categories} />
         </div>
     </div>
   )

@@ -16,7 +16,7 @@ export default async function ProductPageWithId({params: { productId, storeId }}
     });
 
 
-    const categories = await prismadb.product.findMany({
+    const categories = await prismadb.category.findMany({
         where: {
             storeId,
         }

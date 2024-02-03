@@ -2,7 +2,7 @@
 
 import AlertModal from '@/components/modals/alert-modals';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import Heading from '@/components/ui/heading';
 import ImageUpload from '@/components/ui/image-upload';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from "zod";
+import { Checkbox } from "@/components/ui/checkbox"
 
 
 interface ProductFormProps {
@@ -69,7 +70,7 @@ export default function ProductForm({initialData, categories, colors, sizes}: Pr
         : emptyInitialData,
     });
 
-    const params = useParams<{storeId: string; productId: string}>();
+    const params = useParams<{ storeId: string; productId: string}>();
     const router = useRouter();
 
     const title = initialData ? "Edit Product" : "Create Product";
@@ -93,6 +94,7 @@ export default function ProductForm({initialData, categories, colors, sizes}: Pr
             toast.error("Something went wrong");
         } finally {
             setIsLoading(false)
+            setOpen(false)
         }
     }
 
@@ -151,7 +153,7 @@ export default function ProductForm({initialData, categories, colors, sizes}: Pr
                 ) }
                 />
                 
-            <div className="grid grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 <FormField 
                  control={form.control}
                  name="name"
@@ -200,14 +202,15 @@ export default function ProductForm({initialData, categories, colors, sizes}: Pr
                             value={field.value} 
                             defaultValue={field.value}>
                         <FormControl>
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-full ">
                                 <SelectValue defaultValue={field.value}  placeholder="Select a category" />
                             </SelectTrigger>
                         </FormControl>
                             <SelectContent>
                                 {
                                     categories.map((category) => (
-                                        <SelectItem 
+                                        <SelectItem
+                                        className='cursor-pointer' 
                                         key={category.id} 
                                         value={category.id}>
                                             {category.name}
@@ -222,7 +225,121 @@ export default function ProductForm({initialData, categories, colors, sizes}: Pr
                  ) }
                 />
 
+                <FormField
+                 control={form.control}
+                 name="sizeId"
+                 render={({field}) => (
+                    <FormItem>
+                        <FormLabel>Size</FormLabel>
+                            <Select disabled={isLoading} 
+                            onValueChange={field.onChange} 
+                            value={field.value} 
+                            defaultValue={field.value}>
+                        <FormControl>
+                            <SelectTrigger className="w-full ">
+                                <SelectValue defaultValue={field.value}  placeholder="Select a size" />
+                            </SelectTrigger>
+                        </FormControl>
+                            <SelectContent>
+                                {
+                                    sizes.map((size) => (
+                                        <SelectItem
+                                        className='cursor-pointer' 
+                                        key={size.id} 
+                                        value={size.id}>
+                                            {size.name}
+                                        </SelectItem>
+                                    ))
+                                }
+                            </SelectContent>
+                       
+                            </Select>
+                        <FormMessage />
+                    </FormItem>
+                 ) }
+                />
 
+                <FormField
+                 control={form.control}
+                 name="colorId"
+                 render={({field}) => (
+                    <FormItem>
+                        <FormLabel>Color</FormLabel>
+                            <Select disabled={isLoading} 
+                            onValueChange={field.onChange} 
+                            value={field.value} 
+                            defaultValue={field.value}>
+                        <FormControl>
+                            <SelectTrigger className="w-full ">
+                                <SelectValue defaultValue={field.value}  placeholder="Select a color" />
+                            </SelectTrigger>
+                        </FormControl>
+                            <SelectContent>
+                                {
+                                    colors.map((color) => (
+                                        <SelectItem
+                                        className='cursor-pointer' 
+                                        key={color.id} 
+                                        value={color.id}>
+                                            {color.name}
+                                        </SelectItem>
+                                    ))
+                                }
+                            </SelectContent>
+                       
+                            </Select>
+                        <FormMessage />
+                    </FormItem>
+                 ) }
+                />
+
+                <FormField 
+                 control={form.control}
+                 name="isFeatured"
+                 render={({field}) => (
+                    <FormItem className='flex items-start space-x-3 space-y-0 rounded-md border p-4'>
+                        
+                        <FormControl>
+                            <Checkbox 
+                                checked={field.value} 
+                                onCheckedChange={field.onChange}
+                                />
+                        </FormControl>
+                        
+                        <div className="space-y-1 leading-none">
+                            <FormLabel>Featured</FormLabel>
+                            <FormDescription>
+                                This product will appear on the homepage
+                            </FormDescription>
+                        </div>
+                        <FormMessage />
+                    </FormItem>
+                 ) }
+                />
+
+                <FormField 
+                 control={form.control}
+                 name="isArchived"
+                 render={({field}) => (
+                    <FormItem className='flex items-start space-x-3 space-y-0 rounded-md border p-4'>
+                        
+                        <FormControl>
+                            <Checkbox 
+                                checked={field.value} 
+                                onCheckedChange={field.onChange}
+                                />
+                        </FormControl>
+                                
+                        <div className="space-y-1 leading-none">
+                            <FormLabel>Archived</FormLabel>
+                            <FormDescription>
+                                This product will not appear anywhere on the store
+                            </FormDescription>
+                        </div>
+                        <FormMessage />
+                    </FormItem>
+                 ) }
+                />
 
             </div>
             <Button disabled={isLoading} className='ml-auto' >{action}</Button>

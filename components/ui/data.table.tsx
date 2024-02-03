@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full md:max-w-sm"
         />
     </div>
 
@@ -88,7 +88,7 @@ export function DataTable<TData, TValue>({
                     data-state={row.getIsSelected() && "selected"}
                 >
                     {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="p-1">
+                    <TableCell key={cell.id} className="p-4">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                     ))}

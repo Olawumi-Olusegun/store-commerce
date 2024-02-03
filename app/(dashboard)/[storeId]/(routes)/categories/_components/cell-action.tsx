@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { CategoriesColumn } from './columns'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Copy, MoreHorizontal, Trash } from 'lucide-react'
+import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios'
@@ -65,7 +65,7 @@ export default function CellAction({data}: CellActionProps) {
                     <span>Copy Id</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)} className='cursor-pointer'>
-                    <Copy className='w-4 h-4 mr-2' />
+                    <Edit className='w-4 h-4 mr-2' />
                     <span>Update</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setOpen(true)} className='cursor-pointer'>
