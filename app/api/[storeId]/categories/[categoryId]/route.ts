@@ -10,6 +10,7 @@ interface Props {
 export async function PATCH(req: Request, { params: { categoryId, storeId } }: Props ) {
 
     try {
+
         const { userId } = auth();
 
         const body = await req.json();
@@ -61,7 +62,7 @@ export async function PATCH(req: Request, { params: { categoryId, storeId } }: P
 
 
 export async function GET(req: Request, { params: { categoryId } }: Props ) {
-
+    
     try {
 
         if(!categoryId) {
@@ -70,6 +71,7 @@ export async function GET(req: Request, { params: { categoryId } }: Props ) {
 
         const category = await prismadb.category.findUnique({
             where: { id: categoryId },
+            include:{ billboard: true }
         });
 
         return NextResponse.json(category, { status: 200});

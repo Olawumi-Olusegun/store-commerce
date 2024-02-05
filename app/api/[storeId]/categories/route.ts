@@ -57,7 +57,7 @@ export async function GET(req: Request, { params: { storeId } }: ParamsProps) {
         if(!storeId) {
             return  new NextResponse("Store id is required", {status: 400});
         }
-        const categories = await prismadb.billboard.findMany({
+        const categories = await prismadb.category.findMany({
             where: { storeId }
         });
 
